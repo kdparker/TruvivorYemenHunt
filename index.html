@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Beast Yells</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: sans-serif;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        video.playing {
+            opacity: 1;
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .play-button {
+            color: #fff;
+            font-size: 1.5rem;
+            border: 2px solid #fff;
+            padding: 15px 30px;
+            border-radius: 30px;
+            background: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        #overlay:hover .play-button {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <button class="play-button">Click to Enter</button>
+    </div>
+
+    <video id="myVideo" loop playsinline>
+        <source src="https://customer-klhw86hg6t1hx0q7.cloudflarestream.com/32db8aeba0f9610a03146c586e99db1e/manifest/video.m3u8" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const video = document.getElementById('myVideo');
+
+        overlay.addEventListener('click', () => {
+            video.play()
+                .then(() => {
+                    overlay.style.opacity = '0';
+                    overlay.style.visibility = 'hidden';
+                    
+                    video.classList.add('playing');
+                })
+                .catch(error => {
+                    console.error("Playback failed:", error);
+                });
+        });
+    </script>
+
+</body>
